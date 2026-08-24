@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "modern_player_ladder",
+  "version": "${version}",
+  "name": "Modern Player Ladder",
+  "description": "Opt-in player stacking and riding for modern Minecraft.",
+  "authors": [
+    "Lampas"
+  ],
+  "contact": {
+    "homepage": "https://lampas.town",
+    "sources": "https://github.com/justbecauseph/modern-player-ladder"
+  },
+  "license": "LGPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "town.lampas.modernplayerladder.ModernPlayerLadder"
+    ]
+  },
+  "mixins": [
+    "modern-player-ladder.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "fabric-api": "*",
+    "minecraft": "~26.2",
+    "java": ">=25"
+  }
+}
