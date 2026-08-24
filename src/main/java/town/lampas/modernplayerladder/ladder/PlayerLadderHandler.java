@@ -1,5 +1,6 @@
 package town.lampas.modernplayerladder.ladder;
 
+import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,7 +26,9 @@ public final class PlayerLadderHandler {
                 if (vehicle == null) {
                     return InteractionResult.FAIL;
                 }
-                player.startRiding(vehicle);
+                if (!player.startRiding(vehicle)) {
+                    return InteractionResult.FAIL;
+                }
             }
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
         }
@@ -45,7 +48,9 @@ public final class PlayerLadderHandler {
                 if (vehicle == null) {
                     return InteractionResult.FAIL;
                 }
-                targetPassenger.startRiding(vehicle);
+                if (!targetPassenger.startRiding(vehicle)) {
+                    return InteractionResult.FAIL;
+                }
             }
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
         }
@@ -75,6 +80,38 @@ public final class PlayerLadderHandler {
         }
 
         return config.allowLivingEntities() && !PlayerLadderConfig.isEntityExcluded(entity.getType());
+    }
+
+    public static boolean canMountNonSerializablePlayerVehicle(Entity passenger, Entity vehicle, boolean force) {
+        if (!(vehicle instanceof Player carrier)) {
+            return false;
+        }
+
+        PlayerLadderConfig config = PlayerLadderConfig.get();
+        boolean carrierEnabled = !carrier.isSpectator() && PlayerLadderState.isEnabled(carrier);
+        return canMountNonSerializablePlayerVehicle(
+            force,
+            config.rideCommandExtension(),
+            carrierEnabled,
+            canPickUpOrRide(passenger)
+        );
+    }
+
+    static boolean canMountNonSerializablePlayerVehicle(
+        boolean force,
+        boolean rideCommandExtension,
+        boolean carrierEnabled,
+        boolean passengerAllowed
+    ) {
+        return force
+            ? rideCommandExtension
+            : carrierEnabled && passengerAllowed;
+    }
+
+    public static void syncPlayerVehiclePassengers(Entity vehicle) {
+        if (vehicle instanceof ServerPlayer carrier && carrier.connection != null) {
+            carrier.connection.send(new ClientboundSetPassengersPacket(vehicle));
+        }
     }
 
     public static void handleCarrierTick(ServerPlayer player) {

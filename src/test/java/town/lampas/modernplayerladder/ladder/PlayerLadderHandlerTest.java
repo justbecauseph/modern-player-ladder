@@ -94,6 +94,16 @@ public class PlayerLadderHandlerTest {
     }
 
     @Test
+    void testNonSerializablePlayerVehicleAuthorization() {
+        assertTrue(PlayerLadderHandler.canMountNonSerializablePlayerVehicle(true, true, false, false));
+        assertFalse(PlayerLadderHandler.canMountNonSerializablePlayerVehicle(true, false, false, false));
+        assertFalse(PlayerLadderHandler.canMountNonSerializablePlayerVehicle(true, false, true, true));
+        assertTrue(PlayerLadderHandler.canMountNonSerializablePlayerVehicle(false, false, true, true));
+        assertFalse(PlayerLadderHandler.canMountNonSerializablePlayerVehicle(false, false, true, false));
+        assertFalse(PlayerLadderHandler.canMountNonSerializablePlayerVehicle(false, false, false, true));
+    }
+
+    @Test
     void testFilterHitResultPredicateBranches() {
         Entity shooter = mock(Entity.class);
         Entity passenger = mock(Entity.class);
