@@ -8,8 +8,8 @@
 | **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Completed | Commit `51e4080` |
 | **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Completed | Commit `5d291e5` |
 | **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Completed | Commit `8c5fd36` |
-| **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Completed | Pure stacking logic: `rideEntity`, `pickUpEntity`, `canPickUpOrRide`, `getHighestOrSelf` |
-| **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Pending | |
+| **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Completed | Commit `f2ef18b` |
+| **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Completed | Registered `UseEntityCallback` forwarding to `PlayerLadderHandler` by mode |
 | **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Pending | |
 | **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Pending | |
 | **Phase 9** | `/ride` Command Extension (`RideCommandMixin`) | Pending | |
@@ -57,3 +57,12 @@
 - [x] Enforced mutual player consent, spectator rejection, empty main-hand check, and server-side graph mutation.
 - [x] Stack traversal depth limits (`stepUpLimit`, `pickUpLimit`) and cycle detection implemented.
 - [x] No mixins, callbacks, or event registrations added early.
+
+---
+
+## Phase 6: Right-Click Interaction Hook
+- [x] Implemented `PlayerLadderEvents` registering `UseEntityCallback`.
+- [x] Mode dispatching wired to `PlayerLadderHandler` for `RIDE`, `PICK_UP`, and `DO_NOTHING`.
+- [x] Spectators passed through to vanilla with `InteractionResult.PASS`.
+- [x] Server-authoritative design without custom networking.
+- [x] `PlayerLadderEvents.register()` called in `ModernPlayerLadder.onInitialize()`.

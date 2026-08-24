@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import town.lampas.modernplayerladder.command.PlayerLadderCommands;
 import town.lampas.modernplayerladder.config.PlayerLadderConfig;
+import town.lampas.modernplayerladder.ladder.PlayerLadderEvents;
 import town.lampas.modernplayerladder.ladder.PlayerLadderState;
 
 public class ModernPlayerLadder implements ModInitializer {
@@ -18,5 +19,6 @@ public class ModernPlayerLadder implements ModInitializer {
         PlayerLadderConfig.load();
         PlayerLadderConfig.rebuildEntityExclusions();
         PlayerLadderCommands.register();
+        PlayerLadderEvents.register();
     }
 }
