@@ -9,8 +9,8 @@
 | **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Completed | Commit `5d291e5` |
 | **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Completed | Commit `8c5fd36` |
 | **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Completed | Commit `f2ef18b` |
-| **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Completed | Registered `UseEntityCallback` forwarding to `PlayerLadderHandler` by mode |
-| **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Pending | |
+| **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Completed | Commit `516237f` |
+| **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Completed | `ServerPlayerMixin`, `ServerPlayerGameModeMixin`, `ServerPlayerEvents.LEAVE` |
 | **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Pending | |
 | **Phase 9** | `/ride` Command Extension (`RideCommandMixin`) | Pending | |
 | **Phase 10** | Passenger Sync Audit | Pending | |
@@ -66,3 +66,11 @@
 - [x] Spectators passed through to vanilla with `InteractionResult.PASS`.
 - [x] Server-authoritative design without custom networking.
 - [x] `PlayerLadderEvents.register()` called in `ModernPlayerLadder.onInitialize()`.
+
+---
+
+## Phase 7: Lifecycle Behavior
+- [x] Crouch-to-dismount implemented via `ServerPlayerMixin` on `tick` TAIL -> `PlayerLadderHandler.handleCarrierTick`.
+- [x] Logout cleanup implemented via `ServerPlayerEvents.LEAVE` in `PlayerLadderEvents` dismounting departing player from player vehicles.
+- [x] Game-mode change cleanup implemented via `ServerPlayerGameModeMixin` on `changeGameModeForPlayer` RETURN -> `PlayerLadderHandler.handleGameModeChange`.
+- [x] Mixins registered in `modern-player-ladder.mixins.json`.

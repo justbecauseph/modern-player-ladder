@@ -1,5 +1,6 @@
 package town.lampas.modernplayerladder.ladder;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -74,5 +75,23 @@ public final class PlayerLadderHandler {
         }
 
         return config.allowLivingEntities() && !PlayerLadderConfig.isEntityExcluded(entity.getType());
+    }
+
+    public static void handleCarrierTick(ServerPlayer player) {
+        if (player != null && player.onGround() && player.isVehicle() && player.isCrouching()) {
+            Entity firstPassenger = player.getFirstPassenger();
+            if (firstPassenger != null) {
+                firstPassenger.stopRiding();
+            }
+        }
+    }
+
+    public static void handleGameModeChange(ServerPlayer player) {
+        if (player != null && player.isVehicle()) {
+            Entity firstPassenger = player.getFirstPassenger();
+            if (firstPassenger != null) {
+                firstPassenger.stopRiding();
+            }
+        }
     }
 }

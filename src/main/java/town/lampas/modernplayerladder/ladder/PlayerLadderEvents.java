@@ -1,6 +1,8 @@
 package town.lampas.modernplayerladder.ladder;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +17,7 @@ public final class PlayerLadderEvents {
 
     public static void register() {
         UseEntityCallback.EVENT.register(PlayerLadderEvents::onUseEntity);
+        ServerPlayerEvents.LEAVE.register(PlayerLadderEvents::onPlayerLeave);
     }
 
     public static InteractionResult onUseEntity(
@@ -33,5 +36,11 @@ public final class PlayerLadderEvents {
             case PICK_UP -> PlayerLadderHandler.pickUpEntity(player, entity, level, hand);
             case DO_NOTHING -> InteractionResult.PASS;
         };
+    }
+
+    public static void onPlayerLeave(ServerPlayer player) {
+        if (player != null && player.isPassenger() && player.getVehicle() instanceof Player) {
+            player.stopRiding();
+        }
     }
 }

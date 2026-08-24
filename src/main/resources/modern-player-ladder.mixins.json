@@ -3,6 +3,8 @@
   "package": "town.lampas.modernplayerladder.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "ServerPlayerMixin",
+    "ServerPlayerGameModeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
