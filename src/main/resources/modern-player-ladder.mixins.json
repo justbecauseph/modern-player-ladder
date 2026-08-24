@@ -5,7 +5,8 @@
   "mixins": [
     "ServerPlayerMixin",
     "ServerPlayerGameModeMixin",
-    "ProjectileUtilMixin"
+    "ProjectileUtilMixin",
+    "RideCommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1
