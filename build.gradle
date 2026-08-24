@@ -1,6 +1,7 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
+	id 'com.modrinth.minotaur' version '2.9.0'
 }
 
 version = project.mod_version
@@ -68,4 +69,41 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_$projectName"}
 	}
+}
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+	projectId = System.getenv("MODRINTH_PROJECT_ID")
+
+	versionNumber = project.version.toString()
+	versionName = "Modern Player Ladder ${project.version}"
+	versionType = System.getenv("MODRINTH_VERSION_TYPE") ?: "release"
+
+	// Minecraft 26.2 uses the unobfuscated Loom plugin; the normal jar is the distributable artifact.
+	uploadFile = tasks.jar
+
+	gameVersions = [
+		project.minecraft_version.toString()
+	]
+
+	loaders = [
+		"fabric"
+	]
+
+	changelog = System.getenv("MODRINTH_CHANGELOG")
+		?: "See GitHub release notes."
+
+	dependencies {
+		required.project "fabric-api"
+	}
+
+	// Set MODRINTH_DEBUG=true to inspect the payload without publishing a version.
+	debugMode = Boolean.parseBoolean(
+		System.getenv("MODRINTH_DEBUG") ?: "false"
+	)
+}
+
+// Publishing must not bypass the normal build/tests.
+tasks.named("modrinth") {
+	dependsOn tasks.named("build")
 }
