@@ -164,3 +164,4 @@ Scope: create a user-facing `README.md` following the structure and presentation
 - [x] Documented the complete generated JSON configuration and restart requirement.
 - [x] Recorded the Phase 11 server-only result without requiring the mod on connecting clients.
 - [x] Corrected the Fabric manifest license from LGPL-3.0 to the repository's MPL-2.0 license.
+- [x] Post-review: rewrote the README in a more casual consumer voice and removed internal verification and implementation details.

@@ -5,60 +5,64 @@
 [![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.org/)
 [![License](https://img.shields.io/badge/License-MPL--2.0-blue.svg)](LICENSE)
 
-**Modern Player Ladder** is a Fabric gameplay mod for Minecraft 26.2 that lets consenting players form rider stacks. With the default configuration, opt in with `/ladder toggle`, keep your main hand empty, and right-click another opted-in player to climb onto their passenger chain.
+Ever wanted to stack players on top of each other? **Modern Player Ladder** lets you do exactly that. Everyone opts in first, then you right-click another player with an empty hand. That's it.
 
-The server owns consent and passenger state and uses vanilla riding and passenger packets. Dedicated servers can install Modern Player Ladder without requiring the mod on connecting clients.
+Running a dedicated server? You only need the mod on the server. Players can join without installing it themselves.
 
 ---
 
 ## 🌟 Key Features
 
-- **Mutual Consent**: Player-to-player stacking works only when both players have opted in.
-- **Persistent Preference**: Each player's toggle survives reconnects and is copied across death.
-- **Recursive Player Stacks**: New riders are placed at the available end of an existing passenger chain.
-- **Two Interaction Directions**: Choose whether the acting player rides the target or picks the target up.
-- **Lifecycle Cleanup**: Dismounts are synchronized across crouching, toggling off, game-mode changes, logout, and death.
-- **Passenger Passthrough**: Carriers can target and fire projectiles through their own recursive passenger stack when enabled.
-- **Vanilla `/ride` Extension**: Player entities can be used as `/ride` vehicles without replacing the rest of vanilla command validation.
-- **Optional Entity Handling**: Non-player entities can participate when enabled, with configurable entity and tag exclusions.
-- **Server-Only Support**: Live multiplayer testing verified that clients do not need Modern Player Ladder installed.
+- **Opt-In by Default**: Nobody gets picked up unless both players have enabled the feature.
+- **Stack Up**: Keep adding players to build a whole tower.
+- **Ride or Pick Up**: Choose whether you climb onto the player you click or put them on top of you.
+- **Your Choice Sticks**: Your toggle is saved across reconnects and death.
+- **Easy Dismounting**: Sneaking, toggling off, changing game mode, logging out, and dying all clean up rides normally.
+- **Keep Playing Normally**: Aim, attack, and fire projectiles through the players riding on you.
+- **Optional Mob Support**: Let other entities join the fun, with a configurable exclusion list.
+- **Vanilla `/ride` Support**: Server admins can use players as vehicles with the normal `/ride` command.
+- **Server-Side Friendly**: Players joining a dedicated server do not need to install the mod.
 
 ---
 
 ## 🪜 Consent & Usage
 
-Player Ladder is opt-in by default. Each participating player runs either toggle command:
+Player Ladder starts disabled for everyone. To use it:
+
+1. Each participating player runs either toggle command:
 
 ```mcfunction
 /ladder toggle
 /playerladder toggle
 ```
 
-Then, with an empty main hand, right-click another opted-in player. Both players must be non-spectators, player interactions must be enabled in the server config, and the configured stack-depth limit must not be exceeded.
+2. Make sure your main hand is empty.
+3. Right-click another opted-in player.
+4. Keep adding friends until you hit the configured stack limit.
 
-Running the toggle command again disables Player Ladder for that player and immediately breaks their active rider and vehicle relationships.
+Run the command again whenever you want to opt out. Toggling off immediately dismounts you and anyone riding directly on you.
 
 ---
 
 ## 🔄 Interaction Modes
 
-The server-wide `rightClickMode` controls how an accepted right-click changes the passenger graph.
+The server-wide `rightClickMode` decides who ends up on top.
 
 | Mode | Behavior |
 | :--- | :--- |
-| **`RIDE`** | The acting player climbs onto the highest available entity in the target's passenger chain. This is the default. |
-| **`PICK_UP`** | The selected target mounts the highest available entity in the acting player's passenger chain. |
-| **`DO_NOTHING`** | Player Ladder does not handle right-clicks and leaves the interaction to vanilla. |
+| **`RIDE`** | You climb onto the player you click—or onto the top of their existing stack. This is the default. |
+| **`PICK_UP`** | The player you click gets placed on top of you or your existing stack. |
+| **`DO_NOTHING`** | Player Ladder ignores right-clicks and leaves them to vanilla. |
 
 ---
 
 ## 🧍 Dismounting & Cleanup
 
-- A passenger can use the normal vanilla dismount control.
-- A grounded carrier can crouch to dismount their first direct passenger.
-- Toggling Player Ladder off immediately dismounts the player and their direct passengers.
-- Changing a carrier's game mode dismounts their first direct passenger.
-- Logout and death clean up player-vehicle relationships for all connected clients.
+- Riders can use the normal vanilla dismount control.
+- A carrier standing on the ground can crouch to drop the first player riding on them.
+- Toggling Player Ladder off dismounts you and your direct riders.
+- Changing game mode drops your first direct rider.
+- Logging out or dying clears the ride cleanly for everyone.
 
 ---
 
@@ -74,14 +78,14 @@ Restart the server after editing the file. Invalid values fall back to their cor
 
 | Option | Default | Description |
 | :--- | :---: | :--- |
-| `rightClickMode` | `"RIDE"` | Right-click behavior: `RIDE`, `PICK_UP`, or `DO_NOTHING`. |
-| `pickUpLimit` | `16` | Maximum passenger-chain traversal depth used by `PICK_UP` mode. Must be at least `1`. |
-| `stepUpLimit` | `16` | Maximum passenger-chain traversal depth used by `RIDE` mode. Must be at least `1`. |
-| `allowLivingEntities` | `false` | Allows the optional non-player entity interaction path. |
-| `allowPlayers` | `true` | Globally allows players to participate; individual mutual consent is still required. |
-| `excludedLivingEntities` | See below | Entity IDs or `#tag` IDs rejected by the optional entity interaction path. |
-| `rideCommandExtension` | `true` | Allows vanilla `/ride` commands to use players as vehicles. Disabling it restores vanilla's player-vehicle rejection. |
-| `allowInteractions` | `true` | Ignores a carrier's recursive passengers during relevant entity hit testing so the carrier can interact and fire projectiles normally. |
+| `rightClickMode` | `"RIDE"` | Chooses who ends up on top: `RIDE`, `PICK_UP`, or `DO_NOTHING`. |
+| `pickUpLimit` | `16` | How far `PICK_UP` can search through an existing stack. Must be at least `1`. |
+| `stepUpLimit` | `16` | How far `RIDE` can search through an existing stack. Must be at least `1`. |
+| `allowLivingEntities` | `false` | Lets non-player entities participate too. |
+| `allowPlayers` | `true` | Master switch for player stacking. Players still need to opt in individually. |
+| `excludedLivingEntities` | See below | Entity IDs or `#tag` IDs that cannot participate when entity support is enabled. |
+| `rideCommandExtension` | `true` | Lets vanilla `/ride` commands use players as vehicles. Turn it off for vanilla behavior. |
+| `allowInteractions` | `true` | Lets carriers aim, interact, and fire projectiles through the players riding on them. |
 
 The default exclusions are:
 
@@ -102,11 +106,11 @@ Entries beginning with `#` are entity-type tags; other entries are entity-type I
 ## 🛠️ Commands
 
 - `/ladder toggle`
-  - Enables or disables Player Ladder interactions for the executing player.
+  - Turns Player Ladder on or off for you.
 - `/playerladder toggle`
-  - Compatibility alias for `/ladder toggle`.
+  - Does the same thing; this name is kept for compatibility.
 
-The commands are player-only. Vanilla `/ride` permissions and validation remain unchanged except for the configurable player-vehicle rejection.
+Both commands are player-only. If `rideCommandExtension` is enabled, admins can also use the normal vanilla `/ride` command with a player as the vehicle. Normal `/ride` permissions still apply.
 
 ---
 
@@ -118,27 +122,9 @@ For a dedicated server, install:
 - Fabric API for Minecraft 26.2
 - Modern Player Ladder
 
-Modern Player Ladder is server-side compatible: connecting clients do not need this mod installed. This was verified with two real mod-absent Minecraft 26.2 clients performing opt-in, mounting, passenger synchronization, and dismounting against a modded dedicated server.
+Connecting players do not need Modern Player Ladder installed. Just add it to the dedicated server alongside Fabric API.
 
 For singleplayer, install the mod and Fabric API in the client instance because the client hosts the integrated server.
-
----
-
-## 🧱 Architecture
-
-Modern Player Ladder keeps gameplay server-authoritative:
-
-```text
-vanilla right-click packet
-        ↓
-server consent + config checks
-        ↓
-vanilla entity passenger graph
-        ↓
-vanilla passenger synchronization
-```
-
-The mod adds no custom client networking. Focused mixins cover only Minecraft 26.2 gaps for player vehicles, carrier-self passenger synchronization, lifecycle cleanup, projectile hit testing, and the `/ride` player check.
 
 ---
 
