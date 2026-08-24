@@ -10,8 +10,8 @@
 | **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Completed | Commit `8c5fd36` |
 | **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Completed | Commit `f2ef18b` |
 | **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Completed | Commit `516237f` |
-| **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Completed | `ServerPlayerMixin`, `ServerPlayerGameModeMixin`, `ServerPlayerEvents.LEAVE` |
-| **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Pending | |
+| **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Completed | Commit `5725c62` |
+| **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Completed | `ProjectileUtilMixin` with allocation-free recursive passenger filtering |
 | **Phase 9** | `/ride` Command Extension (`RideCommandMixin`) | Pending | |
 | **Phase 10** | Passenger Sync Audit | Pending | |
 | **Phase 11** | Unit & Integration Tests | Pending | |
@@ -74,3 +74,11 @@
 - [x] Logout cleanup implemented via `ServerPlayerEvents.LEAVE` in `PlayerLadderEvents` dismounting departing player from player vehicles.
 - [x] Game-mode change cleanup implemented via `ServerPlayerGameModeMixin` on `changeGameModeForPlayer` RETURN -> `PlayerLadderHandler.handleGameModeChange`.
 - [x] Mixins registered in `modern-player-ladder.mixins.json`.
+
+---
+
+## Phase 8: Projectile / Interaction Passthrough
+- [x] Implemented `ProjectileUtilMixin` on `getEntityHitResult` with `@ModifyVariable` on `Predicate<Entity>`.
+- [x] Implemented allocation-free `PlayerLadderHandler.isRecursivePassenger(root, candidate)`.
+- [x] Gated predicate wrapping behind `allowInteractions` and `shooter.isVehicle()` to skip lambda allocations in empty case.
+- [x] Mixin registered in `modern-player-ladder.mixins.json`.

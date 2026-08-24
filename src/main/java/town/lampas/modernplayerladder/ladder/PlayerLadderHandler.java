@@ -94,4 +94,26 @@ public final class PlayerLadderHandler {
             }
         }
     }
+
+    public static java.util.function.Predicate<Entity> filterHitResultPredicate(
+        java.util.function.Predicate<Entity> predicate,
+        Entity shooter
+    ) {
+        if (PlayerLadderConfig.get().allowInteractions() && shooter != null && shooter.isVehicle()) {
+            return entity -> (predicate == null || predicate.test(entity)) && !isRecursivePassenger(shooter, entity);
+        }
+        return predicate;
+    }
+
+    public static boolean isRecursivePassenger(Entity root, Entity candidate) {
+        if (root == null || candidate == null) return false;
+        Entity vehicle = candidate.getVehicle();
+        while (vehicle != null) {
+            if (vehicle == root) {
+                return true;
+            }
+            vehicle = vehicle.getVehicle();
+        }
+        return false;
+    }
 }

@@ -24,5 +24,13 @@ public class PlayerLadderHandlerTest {
         assertEquals(InteractionResult.PASS, PlayerLadderHandler.pickUpEntity(null, null, null, null));
         assertDoesNotThrow(() -> PlayerLadderHandler.handleCarrierTick(null));
         assertDoesNotThrow(() -> PlayerLadderHandler.handleGameModeChange(null));
+        assertFalse(PlayerLadderHandler.isRecursivePassenger(null, null));
+    }
+
+    @Test
+    void testFilterHitResultPredicateWhenNoPassengers() {
+        java.util.function.Predicate<net.minecraft.world.entity.Entity> originalPredicate = e -> true;
+        // When shooter is null, returns original predicate without wrapping
+        assertSame(originalPredicate, PlayerLadderHandler.filterHitResultPredicate(originalPredicate, null));
     }
 }
