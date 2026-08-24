@@ -14,7 +14,7 @@
 | **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Completed | Commit `74586b4` |
 | **Phase 9** | `/ride` Command Extension (`RideCommandMixin`) | Completed | Commit `9ca8e5c` |
 | **Phase 10** | Passenger Sync Audit | Completed | Commit `cd98cc3` |
-| **Phase 11** | Unit & Integration Tests | Completed | Unit test suite covering config parsing, limits, exclusions, null-safety, and hit-predicate filters |
+| **Phase 11** | Unit & Integration Tests | Completed | 14/14 unit tests passing, dedicated server (`runServer`) startup verified |
 | **Phase 12** | Documentation (README, configuration guide) | Pending | |
 
 ---
@@ -86,8 +86,8 @@
 ---
 
 ## Phase 9: `/ride` Command Extension
-- [x] Implemented `RideCommandMixin` modifying `vehicle.is(EntityType.PLAYER)` via MixinExtras `@ModifyExpressionValue`.
-- [x] Bypasses only player vehicle rejection when `rideCommandExtension` is enabled (`original && !rideCommandExtension`).
+- [x] Implemented `RideCommandMixin` with HEAD injection and shadow exception handling.
+- [x] Bypasses only player vehicle rejection when `rideCommandExtension` is enabled.
 - [x] All other `/ride` validations (already riding, mounting loop, dimension, startRiding) remain intact.
 - [x] Mixin registered in `modern-player-ladder.mixins.json`.
 
@@ -101,7 +101,12 @@
 ---
 
 ## Phase 11: Unit & Integration Tests
-- [x] Comprehensive JUnit 5 unit tests for `PlayerLadderConfig` (defaults, parsing, fallback, saving, ID & tag exclusions).
-- [x] Unit tests for `PlayerLadderHandler` (null safety, predicate filtering with config flags, allocation-free recursive passenger test).
-- [x] Verified zero legacy NeoForge references or imports exist in the entire codebase.
-- [x] `./gradlew clean build` completes successfully with all tests passing.
+- [x] **Unit Testing (14/14 tests passing)**:
+  - `PlayerLadderConfigTest`: Default config, valid JSON parsing, malformed JSON fallback, non-object JSON fallback, invalid bounds clamping, config file persistence, entity type/tag exclusion matching.
+  - `PlayerLadderHandlerTest`: Null safety, 3-level recursive passenger hierarchy detection (`A -> B -> C`), stack traversal and cycle/limit handling in `getHighestOrSelf`, hit-predicate filter branches (`allowInteractions` on/off, vehicle/non-vehicle), grounded carrier crouch dismount, game-mode change passenger dismount, player logout from player vehicle vs non-player vehicle.
+- [x] **Static & Codebase Audits**: Zero legacy NeoForge references across entire source tree.
+- [x] **Dedicated Server Integration (`runServer`)**:
+  - Successfully booted dedicated server on 26.2 (`*:25565`).
+  - Verified mixin transformations (`ServerPlayerMixin`, `ServerPlayerGameModeMixin`, `ProjectileUtilMixin`, `RideCommandMixin`).
+  - Verified world creation, spawn preparation, and clean shutdown.
+- [x] `./gradlew clean build` completes successfully.
