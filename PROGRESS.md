@@ -6,8 +6,8 @@
 |---|---|---|---|
 | **Phase 1** | Project Bootstrap (Gradle, Loom, Fabric metadata, ModInitializer) | Completed | Commit `2962c0e` |
 | **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Completed | Commit `51e4080` |
-| **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Completed | `modern_player_ladder:enabled` attachment with persistence & copyOnDeath |
-| **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Pending | |
+| **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Completed | Commit `5d291e5` |
+| **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Completed | Brigadier commands, feedback messages, immediate dismount |
 | **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Pending | |
 | **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Pending | |
 | **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Pending | |
@@ -41,3 +41,11 @@
 - [x] Default initializer set to `false` (opt-in by default).
 - [x] Codec persistence (`Codec.BOOL`) and `copyOnDeath()` enabled.
 - [x] `PlayerLadderState` helper provides `isEnabled`, `setEnabled`, `toggle`, and `isRidingDisabledByPlayer`.
+
+---
+
+## Phase 4: Commands
+- [x] Implemented `PlayerLadderCommands` with `/ladder toggle` and compatibility alias `/playerladder toggle`.
+- [x] Player source verification via `getPlayerOrException()`.
+- [x] Translatable feedback messages in green (`enabled`) and red (`disabled`).
+- [x] Immediate dismount of carrier passengers and self vehicle relationship on disable.

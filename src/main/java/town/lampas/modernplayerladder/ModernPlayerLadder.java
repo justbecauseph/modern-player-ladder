@@ -3,6 +3,7 @@ package town.lampas.modernplayerladder;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import town.lampas.modernplayerladder.command.PlayerLadderCommands;
 import town.lampas.modernplayerladder.config.PlayerLadderConfig;
 import town.lampas.modernplayerladder.ladder.PlayerLadderState;
 
@@ -16,5 +17,6 @@ public class ModernPlayerLadder implements ModInitializer {
         PlayerLadderState.register();
         PlayerLadderConfig.load();
         PlayerLadderConfig.rebuildEntityExclusions();
+        PlayerLadderCommands.register();
     }
 }
