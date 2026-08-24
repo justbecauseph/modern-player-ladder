@@ -7,8 +7,8 @@
 | **Phase 1** | Project Bootstrap (Gradle, Loom, Fabric metadata, ModInitializer) | Completed | Commit `2962c0e` |
 | **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Completed | Commit `51e4080` |
 | **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Completed | Commit `5d291e5` |
-| **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Completed | Brigadier commands, feedback messages, immediate dismount |
-| **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Pending | |
+| **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Completed | Commit `8c5fd36` |
+| **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Completed | Pure stacking logic: `rideEntity`, `pickUpEntity`, `canPickUpOrRide`, `getHighestOrSelf` |
 | **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Pending | |
 | **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Pending | |
 | **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Pending | |
@@ -49,3 +49,11 @@
 - [x] Player source verification via `getPlayerOrException()`.
 - [x] Translatable feedback messages in green (`enabled`) and red (`disabled`).
 - [x] Immediate dismount of carrier passengers and self vehicle relationship on disable.
+
+---
+
+## Phase 5: Core Stacking Logic
+- [x] Implemented `PlayerLadderHandler` with pure callable methods (`rideEntity`, `pickUpEntity`, `canPickUpOrRide`, `getHighestOrSelf`).
+- [x] Enforced mutual player consent, spectator rejection, empty main-hand check, and server-side graph mutation.
+- [x] Stack traversal depth limits (`stepUpLimit`, `pickUpLimit`) and cycle detection implemented.
+- [x] No mixins, callbacks, or event registrations added early.
