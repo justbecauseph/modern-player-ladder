@@ -11,7 +11,7 @@
     "homepage": "https://lampas.town",
     "sources": "https://github.com/justbecauseph/modern-player-ladder"
   },
-  "license": "LGPL-3.0",
+  "license": "MPL-2.0",
   "environment": "*",
   "entrypoints": {
     "main": [

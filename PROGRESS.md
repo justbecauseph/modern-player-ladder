@@ -15,7 +15,7 @@
 | **Phase 9** | `/ride` Command Extension (`RideCommandMixin`) | Completed | Commit `9ca8e5c` |
 | **Phase 10** | Passenger Sync Audit | Completed | Commit `cd98cc3` |
 | **Phase 11** | Unit & Integration Tests | Completed | Corrective verification: narrow `/ride`, runtime player mounting/sync, and full live multiplayer matrix |
-| **Phase 12** | Documentation (README, configuration guide) | Pending | |
+| **Phase 12** | Documentation (README, configuration guide) | Completed | User README, full config reference, tested server-only installation guidance |
 
 ---
 
@@ -141,3 +141,26 @@ Scope: replace the runtime-working but overbroad `RideCommandMixin` HEAD impleme
 - [x] Vanilla `/ride LadderA mount LadderB` succeeded against a player vehicle and the resulting stack appeared correctly on all three clients.
 - [x] Two replacement clients (`VanillaA` and `VanillaB`) launched with the project classes and resources excluded; both loader logs omitted `modern_player_ladder`.
 - [x] Both mod-absent clients connected to the modded dedicated server, opted in through the server command, mounted successfully, agreed on the passenger graph, and dismounted cleanly.
+
+---
+
+## Phase 12: Documentation
+
+### Scope and acceptance criteria
+
+Scope: create a user-facing `README.md` following the structure and presentation of the Fast Paintings README, document the complete tested v1 behavior and configuration, and correct documentation metadata that conflicts with the repository's authoritative files.
+
+- [x] README explains player stacking, mutual consent, click modes, dismount behavior, commands, and every JSON configuration setting.
+- [x] Installation guidance accurately states the live-tested server-only requirement: the server needs the mod; clients do not.
+- [x] README matches the reference style with version badges, concise feature sections, configuration and command references, build instructions, and license link.
+- [x] All documented defaults, dependency versions, command names, paths, and behavior agree with the current source and Phase 11 evidence.
+- [x] `fabric.mod.json` license metadata agrees with the repository's MPL-2.0 `LICENSE` file.
+- [x] `./gradlew clean build` succeeds after documentation and metadata changes.
+
+### Completed documentation
+
+- [x] Added `README.md` with Fast Paintings-style presentation and user-focused setup instructions.
+- [x] Documented tested multiplayer behavior, lifecycle cleanup, projectile passthrough, `/ride` extension, and optional entity handling.
+- [x] Documented the complete generated JSON configuration and restart requirement.
+- [x] Recorded the Phase 11 server-only result without requiring the mod on connecting clients.
+- [x] Corrected the Fabric manifest license from LGPL-3.0 to the repository's MPL-2.0 license.
