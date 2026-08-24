@@ -4,8 +4,8 @@
 
 | Phase | Description | Status | Commit / Notes |
 |---|---|---|---|
-| **Phase 1** | Project Bootstrap (Gradle, Loom, Fabric metadata, ModInitializer) | Completed | Initial Fabric 26.2 setup with Loom |
-| **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Pending | |
+| **Phase 1** | Project Bootstrap (Gradle, Loom, Fabric metadata, ModInitializer) | Completed | Commit `2962c0e` |
+| **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Completed | JSON config, validation, exclusion cache, and unit tests |
 | **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Pending | |
 | **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Pending | |
 | **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Pending | |
@@ -20,14 +20,16 @@
 ---
 
 ## Phase 1: Bootstrap
-
-### Scope
-- Setup Loom build environment with Minecraft 26.2, Fabric Loader 0.19.3, Fabric API 0.158.0+26.2, and Java 25.
-- Create `build.gradle`, `gradle.properties`, `settings.gradle`.
-- Define Fabric mod metadata in `fabric.mod.json`, mixin config `modern-player-ladder.mixins.json`, and base lang file `en_us.json`.
-- Implement initial `ModernPlayerLadder` mod initializer.
-
-### Acceptance Criteria
 - [x] Standalone build configured for Fabric 26.2 and Java 25.
 - [x] Basic Fabric mod metadata and mixin configuration present.
 - [x] `./gradlew build` completes successfully.
+
+---
+
+## Phase 2: Configuration
+- [x] `ClickMode` enum implemented (`RIDE`, `PICK_UP`, `DO_NOTHING`).
+- [x] `PlayerLadderConfig` implemented matching all parity settings and NeoForge defaults.
+- [x] JSON config loading and saving via Gson at `config/modern-player-ladder.json`.
+- [x] Validation with safe fallback handling for corrupted JSON, malformed IDs/tags, and invalid limit bounds.
+- [x] Pre-parsed entity exclusion cache for entity types and tags.
+- [x] Comprehensive JUnit 5 unit tests passing in `./gradlew test`.
