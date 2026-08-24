@@ -5,8 +5,8 @@
 | Phase | Description | Status | Commit / Notes |
 |---|---|---|---|
 | **Phase 1** | Project Bootstrap (Gradle, Loom, Fabric metadata, ModInitializer) | Completed | Commit `2962c0e` |
-| **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Completed | JSON config, validation, exclusion cache, and unit tests |
-| **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Pending | |
+| **Phase 2** | Configuration (`PlayerLadderConfig`, `ClickMode`, JSON storage, exclusions) | Completed | Commit `51e4080` |
+| **Phase 3** | Persistent Consent (Fabric Data Attachments, `PlayerLadderState`) | Completed | `modern_player_ladder:enabled` attachment with persistence & copyOnDeath |
 | **Phase 4** | Commands (`/ladder toggle`, `/playerladder toggle`, immediate dismount) | Pending | |
 | **Phase 5** | Core Stacking Logic (`PlayerLadderHandler` port) | Pending | |
 | **Phase 6** | Right-Click Interaction Hook (`UseEntityCallback` / interaction hook) | Pending | |
@@ -33,3 +33,11 @@
 - [x] Validation with safe fallback handling for corrupted JSON, malformed IDs/tags, and invalid limit bounds.
 - [x] Pre-parsed entity exclusion cache for entity types and tags.
 - [x] Comprehensive JUnit 5 unit tests passing in `./gradlew test`.
+
+---
+
+## Phase 3: Persistent Consent
+- [x] Registered `modern_player_ladder:enabled` using Fabric Data Attachment API (`fabric-data-attachment-api-v1`).
+- [x] Default initializer set to `false` (opt-in by default).
+- [x] Codec persistence (`Codec.BOOL`) and `copyOnDeath()` enabled.
+- [x] `PlayerLadderState` helper provides `isEnabled`, `setEnabled`, `toggle`, and `isRidingDisabledByPlayer`.
