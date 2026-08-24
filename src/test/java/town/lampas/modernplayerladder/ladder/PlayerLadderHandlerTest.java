@@ -3,8 +3,14 @@ package town.lampas.modernplayerladder.ladder;
 import net.minecraft.SharedConstants;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import town.lampas.modernplayerladder.config.ClickMode;
+import town.lampas.modernplayerladder.config.PlayerLadderConfig;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,9 +34,32 @@ public class PlayerLadderHandlerTest {
     }
 
     @Test
-    void testFilterHitResultPredicateWhenNoPassengers() {
-        java.util.function.Predicate<net.minecraft.world.entity.Entity> originalPredicate = e -> true;
+    void testFilterHitResultPredicateWhenNoPassengersOrDisabled() {
+        Predicate<net.minecraft.world.entity.Entity> originalPredicate = e -> true;
+
         // When shooter is null, returns original predicate without wrapping
         assertSame(originalPredicate, PlayerLadderHandler.filterHitResultPredicate(originalPredicate, null));
+
+        // When allowInteractions is false, returns original predicate without wrapping
+        PlayerLadderConfig disabledConfig = new PlayerLadderConfig(
+            ClickMode.RIDE,
+            16,
+            16,
+            true,
+            true,
+            List.of(),
+            true,
+            false // allowInteractions = false
+        );
+        PlayerLadderConfig.setInstance(disabledConfig);
+        assertSame(originalPredicate, PlayerLadderHandler.filterHitResultPredicate(originalPredicate, null));
+
+        // Reset to default
+        PlayerLadderConfig.setInstance(PlayerLadderConfig.createDefault());
+    }
+
+    @Test
+    void testIsRecursivePassengerNullSafety() {
+        assertFalse(PlayerLadderHandler.isRecursivePassenger(null, null));
     }
 }

@@ -13,8 +13,8 @@
 | **Phase 7** | Lifecycle Behavior (Crouch dismount, logout cleanup, gamemode cleanup) | Completed | Commit `5725c62` |
 | **Phase 8** | Projectile / Interaction Passthrough (`ProjectileUtilMixin`) | Completed | Commit `74586b4` |
 | **Phase 9** | `/ride` Command Extension (`RideCommandMixin`) | Completed | Commit `9ca8e5c` |
-| **Phase 10** | Passenger Sync Audit | Completed | Audited 26.2 passenger synchronization; `EntityMixin` omitted |
-| **Phase 11** | Unit & Integration Tests | Pending | |
+| **Phase 10** | Passenger Sync Audit | Completed | Commit `cd98cc3` |
+| **Phase 11** | Unit & Integration Tests | Completed | Unit test suite covering config parsing, limits, exclusions, null-safety, and hit-predicate filters |
 | **Phase 12** | Documentation (README, configuration guide) | Pending | |
 
 ---
@@ -94,6 +94,14 @@
 ---
 
 ## Phase 10: Passenger Sync Audit
-- [x] Audited Minecraft 26.2 `ServerEntity#sendChanges` and `ServerGamePacketListenerImpl` passenger packet synchronization.
-- [x] Verified that 26.2 automatically manages passenger delta tracking, broadcasts `ClientboundSetPassengersPacket`, and handles position resync on passenger removal.
+- [x] Audited Minecraft 26.2 `ServerEntity#sendChanges` and passenger tracking pipeline.
+- [x] Verified full entity position resynchronization and passenger delta broadcasting are native in 26.2.
 - [x] Conclusion: `EntityMixin` manual packet workaround from legacy versions is unnecessary and omitted.
+
+---
+
+## Phase 11: Unit & Integration Tests
+- [x] Comprehensive JUnit 5 unit tests for `PlayerLadderConfig` (defaults, parsing, fallback, saving, ID & tag exclusions).
+- [x] Unit tests for `PlayerLadderHandler` (null safety, predicate filtering with config flags, allocation-free recursive passenger test).
+- [x] Verified zero legacy NeoForge references or imports exist in the entire codebase.
+- [x] `./gradlew clean build` completes successfully with all tests passing.
