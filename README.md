@@ -151,6 +151,11 @@ The project targets:
 
 ---
 
+## Similar Projects
+- [Player Ladder](https://modrinth.com/mod/player-ladder) - Lower version and Forge support (1.18x - 1.21.x)
+
+---
+
 ## 📄 License
 
 Modern Player Ladder is licensed under the [Mozilla Public License 2.0 (MPL-2.0)](LICENSE).
