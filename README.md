@@ -1,7 +1,7 @@
 # Modern Player Ladder
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-26.2-brightgreen.svg)](https://minecraft.net/)
-[![Fabric API](https://img.shields.io/badge/Fabric%20API-0.158.0%2B26.2-blue.svg)](https://fabricmc.net/)
+[![Minecraft](https://img.shields.io/badge/Minecraft-26.3-brightgreen.svg)](https://minecraft.net/)
+[![Fabric API](https://img.shields.io/badge/Fabric%20API-0.161.0%2B26.3-blue.svg)](https://fabricmc.net/)
 [![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.org/)
 [![License](https://img.shields.io/badge/License-MPL--2.0-blue.svg)](LICENSE)
 
@@ -118,8 +118,8 @@ Both commands are player-only. If `rideCommandExtension` is enabled, admins can 
 
 For a dedicated server, install:
 
-- Fabric Loader `0.19.3` or newer compatible version
-- Fabric API for Minecraft 26.2
+- Fabric Loader `0.19.5` or newer compatible version
+- Fabric API for Minecraft 26.3
 - Modern Player Ladder
 
 Connecting players do not need Modern Player Ladder installed. Just add it to the dedicated server alongside Fabric API.
@@ -144,9 +144,9 @@ build/libs/
 
 The project targets:
 
-- Minecraft `26.2`
-- Fabric Loader `0.19.3`
-- Fabric API `0.158.0+26.2`
+- Minecraft `26.3`
+- Fabric Loader `0.19.5`
+- Fabric API `0.161.0+26.3`
 - Java `25`
 
 ---
