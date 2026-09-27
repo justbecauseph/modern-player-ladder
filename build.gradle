@@ -79,7 +79,7 @@ modrinth {
 	versionName = "Modern Player Ladder ${project.version}"
 	versionType = System.getenv("MODRINTH_VERSION_TYPE") ?: "release"
 
-	// Minecraft 26.2 uses the unobfuscated Loom plugin; the normal jar is the distributable artifact.
+	// Minecraft 26.3 uses the unobfuscated Loom plugin; the normal jar is the distributable artifact.
 	uploadFile = tasks.jar
 
 	gameVersions = [
